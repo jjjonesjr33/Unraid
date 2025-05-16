@@ -2,6 +2,7 @@
 
 CONTAINER_NAME="Plex-Media-Server"
 APPRISE_API_URL="http://your-apprise-server:8000/notify"
+HOSTNAME=$(hostname)
 
 # Function to send messages to Apprise API with YAML-style URL list
 notify_apprise() {
@@ -11,7 +12,7 @@ notify_apprise() {
   curl -s -X POST "$APPRISE_API_URL" \
     -H "Content-Type: application/json" \
     -d "$(jq -n \
-          --arg title "$title" \
+          --arg title "$title ($HOSTNAME)" \
           --arg body "$message" \
           --argjson urls '[
             "discord://<webhook_id>/<webhook_token>",
